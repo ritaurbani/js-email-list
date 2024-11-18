@@ -1,28 +1,24 @@
 
 const emailListElem = document.querySelector(".email-list")
+const createBtnElem = document.getElementById("createBtn")
 
-let emailArray = [];
-for ( let i=0;i<10; i++) {
-axios.get("https://flynn.boolean.careers/exercises/api/random/mail").then((resp) => {
-    console.log(resp);
-    //preleviamo la risposta
-    const emails = resp.data.response;
-    console.log(emails)
-    emailArray.push(emails)
-    console.log(emailArray)
-    
-  let listItem ="";
+//function
+const createEmailList = () => {
+    emailListElem.innerHTML = "";
+for (let i = 0; i < 10; i++) {
+    axios.get("https://flynn.boolean.careers/exercises/api/random/mail").then((resp) => {
+        console.log(resp);
+        //preleviamo la risposta
+        const email = resp.data.response;
+        console.log(email)
+        let listItem = `<li class="list-group-item">${email}</li>`;
 
-  for (let i=0;i<emailArray.length;i++) {
-    curEmail = emailArray[i]
-    listItem += `
-    <li>${curEmail}</li>
-    `
-  }
-    console.log(listItem)
+        emailListElem.innerHTML += listItem
 
-    emailListElem.innerHTML = listItem
-
-})
+    })
 
 }
+
+}
+
+createBtnElem.addEventListener("click", createEmailList)
